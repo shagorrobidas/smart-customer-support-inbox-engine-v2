@@ -25,18 +25,28 @@ SECRET_KEY = 'django-insecure-kl+8)f2d@==rx5eb5f8-0s9t8h^h!^uoh0udgymy^q26!c0dfa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third Party Apps
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'django_filters',
+    'channels',
+    
+    # Local Apps
+    
 ]
 
 MIDDLEWARE = [
