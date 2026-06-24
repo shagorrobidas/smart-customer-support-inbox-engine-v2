@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'channels',
 
     # Local Apps
+    'api',
     'conversations',
 ]
 
