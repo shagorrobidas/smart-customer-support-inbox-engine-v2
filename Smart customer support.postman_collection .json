@@ -1,0 +1,414 @@
+{
+  "info": {
+    "_postman_id": "4360922a-2b94-4c11-b9dc-f3090b38e289",
+    "name": "Smart customer support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46914186",
+    "_collection_link": "https://go.postman.co/collection/46914186-4360922a-2b94-4c11-b9dc-f3090b38e289?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}token/",
+          "host": [
+            "{{urls}}token"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Refresh JWT",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "refresh",
+              "value": "{{refresh}}",
+              "type": "text",
+              "uuid": "fb3e9709-f9be-4c9e-8c12-fe48e2d0d842"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{urls}}token/refresh/",
+          "host": [
+            "{{urls}}token"
+          ],
+          "path": [
+            "refresh",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Conversation list",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/?status=&search=",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ""
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": ""
+            },
+            {
+              "key": "search",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Conversation Start",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"customer_name\": \"Shagor Robidas\",\n    \"status\": \"open\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Conversation Details",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/:pk/",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ":pk",
+            ""
+          ],
+          "variable": [
+            {
+              "key": "pk",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Message History",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/:pk/messages/",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ":pk",
+            "messages",
+            ""
+          ],
+          "variable": [
+            {
+              "key": "pk",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Message suggest replay",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"message\": \"refund .\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/:pk/suggest-reply/",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ":pk",
+            "suggest-reply",
+            ""
+          ],
+          "variable": [
+            {
+              "key": "pk",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Lock Conversation",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/:pk/lock/",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ":pk",
+            "lock",
+            ""
+          ],
+          "variable": [
+            {
+              "key": "pk",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Unlock Conversation",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urls}}conversations/:pk/unlock/",
+          "host": [
+            "{{urls}}conversations"
+          ],
+          "path": [
+            ":pk",
+            "unlock",
+            ""
+          ],
+          "variable": [
+            {
+              "key": "pk",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "urls",
+      "value": ""
+    },
+    {
+      "key": "access",
+      "value": ""
+    },
+    {
+      "key": "refresh",
+      "value": ""
+    }
+  ]
+}
