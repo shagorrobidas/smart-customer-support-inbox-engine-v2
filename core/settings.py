@@ -85,24 +85,24 @@ ASGI_APPLICATION = 'core.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'smart_inbox'),
-        'USER': os.getenv('DB_USER', ''),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', ''),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'smart-customer-support-inbox-engine.db',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME', 'smart-customer-support-inbox-engine'),
+#         'USER': os.getenv('DB_USER', ''),
+#         'PASSWORD': os.getenv('DB_PASSWORD', ''),
+#         'HOST': os.getenv('DB_HOST', ''),
+#         'PORT': os.getenv('DB_PORT', ''),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -153,8 +153,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'api.utils.pagination.CustomPagination',
     'PAGE_SIZE': 20,
+    'EXCEPTION_HANDLER': 'api.utils.exceptions.custom_exception_handler',
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -176,6 +177,9 @@ SIMPLE_JWT = {
 }
 
 REDIS_HOST = os.getenv('REDIS_HOST', '127.0.0.1')
+if REDIS_HOST == 'localhost':
+    REDIS_HOST = '127.0.0.1'
+print(f"--- DEBUG: REDIS_HOST is set to: {REDIS_HOST!r} ---")
 
 # Redis Caching (For Locks & General Cache)
 CACHES = {
@@ -197,8 +201,13 @@ CELERY_TIMEZONE = 'UTC'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'config': {
-            "hosts": [(REDIS_HOST, 6379)],
+        'CONFIG': {
+            "hosts": [{
+                "address": f"redis://{REDIS_HOST}:6379/0",
+                "socket_timeout": 60,
+                "health_check_interval": 15,
+                "retry_on_timeout": True,
+            }],
         },
     },
 }
